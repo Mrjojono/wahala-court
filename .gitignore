@@ -1,0 +1,39 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+build/
+next-env.d.ts
+
+# env
+.env
+.env*.local
+
+# data — derived, rebuilt from data/corpus.raw.jsonl by scripts/build-index.ts
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/index/
+
+# ollama / local models
+*.gguf
+models/
+
+# logs
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# os
+.DS_Store
+Thumbs.db
+
+# misc
+.vercel
+.turbo
+coverage/
+*.tsbuildinfo
