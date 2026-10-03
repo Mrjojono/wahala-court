@@ -3,37 +3,45 @@ node_modules/
 .pnp
 .pnp.js
 
-# next.js
-.next/
-out/
-build/
-next-env.d.ts
+# SvelteKit / frontend builds
+app/.svelte-kit/
+app/build/
+app/.vite/
 
-# env
+# Environment files (keep examples)
 .env
-.env*.local
+.env.*
+!.env.example
+app/.env
+app/.env.*
+!app/.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
 
-# data — derived, rebuilt from data/corpus.raw.jsonl by scripts/build-index.ts
+# Local data and model downloads
 data/*.db
 data/*.sqlite
 data/*.sqlite3
 data/index/
-
-# ollama / local models
-*.gguf
 models/
+*.gguf
 
-# logs
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+backend/.venv/
+
+# Logs and generated reports
 *.log
 npm-debug.log*
 yarn-error.log*
-
-# os
-.DS_Store
-Thumbs.db
-
-# misc
-.vercel
-.turbo
 coverage/
 *.tsbuildinfo
+
+# OS / editor / tooling
+.DS_Store
+Thumbs.db
+.vercel/
+.turbo/

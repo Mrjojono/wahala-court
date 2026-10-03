@@ -1,0 +1,367 @@
+@use '../tokens' as *;
+@use '../mixins' as *;
+
+.floating-nav {
+	position: fixed;
+	left: 50%;
+	bottom: $sp-3;
+	transform: translateX(-50%);
+	z-index: 40;
+	display: flex;
+	align-items: center;
+	gap: $sp-2;
+	width: min(880px, calc(100vw - 1rem));
+	padding: 6px 10px;
+	background: $paper-alt;
+	border: $border-thick solid $ink;
+	border-radius: $r-full;
+	box-shadow: $shadow-md;
+
+	&__brand {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		text-decoration: none;
+		color: $ink;
+		flex-shrink: 0;
+	}
+
+	&__mark {
+		display: grid;
+		place-items: center;
+		width: 24px;
+		height: 24px;
+		border-radius: $r-full;
+		background: $red;
+		border: 1px solid $ink;
+		color: $paper;
+		font-family: $font-display;
+		font-weight: 700;
+		font-size: 0.75rem;
+	}
+
+	&__word {
+		display: none;
+		flex-direction: column;
+		font-family: $font-display;
+		font-size: 0.62rem;
+		font-weight: 700;
+		line-height: 1;
+		letter-spacing: 0.04em;
+
+		@include from($bp-sm) {
+			display: flex;
+		}
+	}
+
+	&__court {
+		color: $red;
+	}
+
+	&__divider {
+		width: 1px;
+		height: 22px;
+		background: $muted-light;
+		flex-shrink: 0;
+		display: none;
+
+		@include from($bp-sm) {
+			display: block;
+		}
+	}
+
+	&__links {
+		display: flex;
+		align-items: center;
+		gap: 2px;
+		flex: 1;
+		min-width: 0;
+		overflow-x: auto;
+	}
+
+	&__link {
+		@include mono-label($fs-mono-xs, $ink);
+		text-decoration: none;
+		text-transform: uppercase;
+		padding: 6px 8px;
+		border-radius: $r-full;
+		white-space: nowrap;
+
+		&.is-active {
+			background: $ink;
+			color: $paper;
+		}
+	}
+
+	&__cta {
+		@include mono-label($fs-mono-xs, $paper);
+		text-decoration: none;
+		text-transform: uppercase;
+		background: $red;
+		border: 1px solid $ink;
+		border-radius: $r-full;
+		padding: 6px 12px;
+		font-weight: 700;
+		flex-shrink: 0;
+	}
+}
+
+.screen {
+	padding-bottom: 72px;
+
+	&--flush {
+		padding-bottom: 64px;
+		height: 100dvh;
+		max-height: 100dvh;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+	}
+}
+
+.screen__body {
+	width: 100%;
+	max-width: $content-max;
+	margin-inline: auto;
+	padding: $sp-3 $gutter $sp-5;
+	min-width: 0;
+	display: flex;
+	flex-direction: column;
+
+	&--wide {
+		max-width: min(1200px, 100%);
+	}
+
+	&--flush {
+		max-width: none;
+		padding: 0;
+		flex: 1;
+		min-height: 0;
+		overflow: hidden;
+	}
+}
+
+.screen__title {
+	@include display-type($fs-display-lg, $ink);
+	text-transform: uppercase;
+	margin-bottom: $sp-2;
+}
+
+.alert-stripe {
+	width: 100%;
+	padding: 6px $sp-3;
+	margin-bottom: $sp-3;
+	border: $border-thick solid $ink;
+
+	p {
+		@include mono-label($fs-mono-xs, $paper);
+		text-transform: uppercase;
+		margin: 0;
+	}
+
+	&--red {
+		background: $red;
+	}
+
+	&--ink {
+		background: $ink;
+	}
+}
+
+.stamp {
+	display: inline-flex;
+	align-items: center;
+	padding: 4px 10px;
+	border: $border-thick solid $ink;
+	border-radius: $r-full;
+	font-family: $font-mono;
+	font-size: $fs-mono-xs;
+	font-weight: 700;
+	letter-spacing: $ls-mono;
+	text-transform: uppercase;
+	line-height: 1;
+	background: $paper-alt;
+	color: $ink;
+
+	&--red {
+		background: $red;
+		color: $paper;
+	}
+
+	&--green {
+		background: $green;
+		color: $paper;
+	}
+
+	&--gold {
+		background: $gold-tint;
+		color: $gold-deep;
+	}
+
+	&--ink {
+		background: $ink;
+		color: $paper;
+	}
+
+	&--tilt {
+		transform: rotate(-3deg);
+	}
+}
+
+.poll-bar {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin: $sp-3 0;
+	padding: $sp-2 $sp-3;
+	border: $border-thick solid $ink;
+	background: $paper-alt;
+
+	&__meta {
+		display: flex;
+		justify-content: space-between;
+		gap: $sp-2;
+		flex-wrap: wrap;
+		@include mono-label($fs-mono-xs, $muted);
+		text-transform: uppercase;
+	}
+
+	&__track {
+		display: flex;
+		height: 10px;
+		border: 1px solid $ink;
+		overflow: hidden;
+	}
+
+	&__guilty {
+		background: $red;
+	}
+
+	&__innocent {
+		background: $green;
+	}
+}
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: $sp-2;
+	padding: $sp-3 $sp-4;
+	background: $ink;
+	color: $paper;
+	font-family: $font-mono;
+	font-size: $fs-mono-sm;
+	font-weight: 700;
+	letter-spacing: $ls-mono;
+	text-transform: uppercase;
+	line-height: 1.2;
+	border: $border-thick solid $ink;
+	border-radius: $r-full;
+	cursor: pointer;
+	max-width: 100%;
+	text-align: center;
+
+	&:hover,
+	&:focus-visible {
+		background: $green;
+	}
+
+	&:disabled {
+		opacity: 0.45;
+		cursor: not-allowed;
+		pointer-events: none;
+	}
+
+	&--hero {
+		width: 100%;
+		padding: $sp-4 $sp-5;
+	}
+
+	&--danger {
+		background: $red;
+		color: $paper;
+
+		&:hover,
+		&:focus-visible {
+			background: $red-deep;
+		}
+	}
+
+	&--ghost {
+		background: $paper-alt;
+		color: $ink;
+
+		&:hover,
+		&:focus-visible {
+			background: $gold-tint;
+		}
+	}
+
+	&--sm {
+		padding: 6px 12px;
+		font-size: $fs-mono-xs;
+	}
+}
+
+.objection {
+	position: fixed;
+	inset: 0;
+	z-index: 50;
+	display: grid;
+	place-items: center;
+	pointer-events: none;
+	background: rgb(23 19 16 / 0.18);
+
+	&__stamp {
+		@include mono-label($fs-display-md, $paper);
+		font-family: $font-display;
+		font-weight: 900;
+		font-size: clamp(1.4rem, 5vw, 2.4rem);
+		background: $red;
+		border: 3px solid $ink;
+		padding: $sp-4 $sp-5;
+		transform: rotate(-8deg);
+		box-shadow: $shadow-lg;
+		text-transform: uppercase;
+		animation: objection-pop 0.35s ease-out;
+	}
+}
+
+@keyframes objection-pop {
+	from {
+		transform: rotate(-8deg) scale(0.6);
+		opacity: 0;
+	}
+	to {
+		transform: rotate(-8deg) scale(1);
+		opacity: 1;
+	}
+}
+
+.wahala-meter {
+	position: relative;
+	width: 100%;
+	height: 28px;
+	background: $paper;
+	border: $border-thick solid $ink;
+	border-radius: $r-full;
+	overflow: hidden;
+	margin: $sp-2 0 $sp-3;
+
+	&__bar {
+		height: 100%;
+		background: $green;
+		transition: width 0.35s ease;
+	}
+
+	&__label {
+		@include mono-label($fs-mono-xs, $ink);
+		position: absolute;
+		inset: 0;
+		display: grid;
+		place-items: center;
+		pointer-events: none;
+		font-weight: 700;
+	}
+}

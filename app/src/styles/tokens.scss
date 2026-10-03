@@ -1,0 +1,80 @@
+// ============================================================
+// WAHALA COURT — Design tokens (source unique de vérité)
+// ============================================================
+
+// ---------- Couleurs de surface ----------
+$paper: #f7f3ea;
+$paper-alt: #fffdf7;
+$ink: #171310;
+$ink-soft: #1f1b18;
+$muted: #6b6559;
+$muted-light: #8c8579;
+
+// ---------- Couleurs de sens ----------
+$red: #b3311f;
+$red-deep: #8d2620;
+$red-tint: #fff8f5;
+$green: #2f5233;
+$green-tint: #eaf3ea;
+$gold: #c89b3c;
+$gold-deep: #7e5b00;
+$gold-tint: #fdf6e3;
+
+// ---------- Typographie ----------
+$font-display: 'Domine', 'Georgia', serif;
+$font-body: 'Bricolage Grotesque', system-ui, sans-serif;
+$font-mono: 'Space Mono', 'Courier New', monospace;
+
+$fs-display-sm: 1rem;
+$fs-display-md: 1.4rem;
+$fs-display-lg: 1.75rem;
+$fs-display-xl: 2.35rem;
+$fs-display-2xl: 3.25rem;
+$fs-display-3xl: 4.75rem;
+$fs-display-4xl: 6rem;
+
+$fs-body-sm: 0.9375rem;
+$fs-body-md: 1.0625rem;
+$fs-body-lg: 1.2rem;
+$fs-body-xl: 1.35rem;
+
+$fs-mono-xs: 0.7rem;
+$fs-mono-sm: 0.8rem;
+$fs-mono-md: 0.875rem;
+$fs-mono-lg: 1rem;
+
+$lh-tight: 1.1;
+$lh-normal: 1.5;
+$ls-display: -0.02em;
+$ls-mono: 0.06em;
+
+// ---------- Espacement ----------
+$sp-1: 4px;
+$sp-2: 8px;
+$sp-3: 12px;
+$sp-4: 16px;
+$sp-5: 20px;
+$sp-6: 24px;
+$sp-7: 28px;
+$sp-8: 32px;
+$sp-10: 40px;
+
+$gutter: 1rem;
+$content-max: 900px;
+
+// ---------- Rayon ----------
+$r-two: 2px;
+$r-four: 4px;
+$r-full: 999px;
+
+// ---------- Ombres / bordures ----------
+$shadow-md: $ink 0 0 0 2px, $ink 4px 4px 0 $paper;
+$shadow-lg: $ink 0 0 0 3px, $ink 8px 8px 0 $paper;
+$border-thick: 2px;
+$border-thin: 1px;
+$rule: $muted;
+
+// ---------- Breakpoints ----------
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;

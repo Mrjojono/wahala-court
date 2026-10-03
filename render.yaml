@@ -1,0 +1,52 @@
+# Wahala Court — Render Blueprint
+# https://render.com/docs/blueprint-spec
+#
+# 1. Push ce repo sur GitHub
+# 2. Render → New → Blueprint → sélectionne le repo
+# 3. Remplis GEMINI_API_KEY (secret) au premier deploy
+# 4. Après deploy : mets CORS_ORIGINS = URL exacte du service web (https://….onrender.com)
+
+services:
+  - type: web
+    name: wahala-court-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: TOGOLM_API_KEY
+        sync: false
+      - key: GEMMA_CLOUD_MODEL
+        value: gemma-4-26b-a4b-it
+      - key: OLLAMA_BASE_URL
+        value: ""
+      - key: OLLAMA_MODEL
+        value: gemma3:1b
+      # Autorise le front Render (affine après 1er deploy avec l’URL exacte)
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: HOST
+        value: 0.0.0.0
+
+  - type: web
+    name: wahala-court-web
+    runtime: node
+    plan: free
+    rootDir: app
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Remplacé automatiquement par l’URL publique de l’API
+      - key: PUBLIC_API_URL
+        fromService:
+          name: wahala-court-api
+          type: web
+          envVarKey: RENDER_EXTERNAL_URL

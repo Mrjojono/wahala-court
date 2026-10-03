@@ -1,0 +1,87 @@
+// ============================================================
+// Base — reset + fondations typographiques
+// ============================================================
+
+@use 'tokens' as *;
+@use 'mixins' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+@include reduced-motion {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  @include newsprint;
+  color: $ink;
+  font-family: $font-body;
+  font-size: $fs-body-md;
+  line-height: $lh-normal;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: $lh-tight;
+  letter-spacing: $ls-display;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+img,
+svg,
+picture {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  @include reset-control;
+  background: none;
+  cursor: pointer;
+}
+
+// ---------- Sécurité overflow ----------
+html {
+  overflow-x: clip;
+}

@@ -1,0 +1,32 @@
+{
+  "name": "wahala-court",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"start": "node build/index.js",
+		"check": "svelte-check"
+	},
+  "dependencies": {
+    "@lucide/svelte": "^1.51.0",
+    "sass-embedded": "^1.105.1",
+    "svelte": "^5.57.1",
+    "vite": "^8.3.2"
+  },
+  "description": "",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@sveltejs/adapter-auto": "^6.1.1",
+    "@sveltejs/adapter-node": "^5.5.7",
+    "@sveltejs/kit": "^2.70.3",
+    "@sveltejs/vite-plugin-svelte": "^7.3.1",
+    "svelte-check": "^4.7.6",
+    "typescript": "^5.9.3"
+  }
+}

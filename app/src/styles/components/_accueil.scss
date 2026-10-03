@@ -1,0 +1,575 @@
+@use '../tokens' as *;
+@use '../mixins' as *;
+
+.accueil {
+	&__top {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: $sp-2;
+		margin-bottom: $sp-3;
+	}
+
+	&__logo {
+		@include mono-label($fs-mono-sm, $ink);
+		font-weight: 700;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+
+	&__links {
+		@include mono-label($fs-mono-xs, $muted);
+		text-transform: uppercase;
+		margin: 0;
+
+		a {
+			color: $muted;
+			text-decoration: none;
+
+			&:hover {
+				color: $ink;
+			}
+		}
+	}
+
+	&__hero {
+		display: flex;
+		flex-direction: column;
+		gap: $sp-2;
+		margin-bottom: $sp-4;
+	}
+
+	&__eyebrow {
+		@include mono-label($fs-mono-xs, $red);
+		text-transform: uppercase;
+		margin: 0;
+	}
+
+	&__title {
+		@include display-type(clamp(2.4rem, 10vw, 3.75rem), $ink);
+		text-transform: uppercase;
+		margin: 0;
+		line-height: 0.95;
+	}
+
+	&__pitch {
+		max-width: 36rem;
+		font-size: $fs-body-lg;
+		line-height: 1.4;
+		color: $ink-soft;
+		margin: 0;
+	}
+
+	&__art {
+		width: 100%;
+		margin: $sp-1 0;
+		overflow: hidden;
+		max-height: min(28vh, 240px);
+		border: 0;
+		background: transparent;
+
+		img {
+			width: 100%;
+			height: min(28vh, 240px);
+			object-fit: cover;
+			object-position: center 35%;
+			display: block;
+		}
+	}
+
+	&__note {
+		@include mono-label($fs-mono-xs, $muted);
+		text-transform: uppercase;
+		margin: 0;
+	}
+}
+
+.how {
+	margin-top: $sp-3;
+
+	&__eyebrow {
+		@include mono-label($fs-mono-xs, $red);
+		text-transform: uppercase;
+		margin-bottom: $sp-2;
+	}
+
+	&__cols {
+		display: grid;
+		gap: 0;
+		grid-template-columns: 1fr;
+		border: $border-thick solid $ink;
+
+		@include from($bp-md) {
+			grid-template-columns: repeat(2, 1fr);
+		}
+
+		@include from($bp-lg) {
+			grid-template-columns: repeat(4, 1fr);
+		}
+	}
+
+	&__col {
+		padding: $sp-3;
+		background: $paper-alt;
+		border-bottom: $border-thick solid $ink;
+
+		@include from($bp-md) {
+			border-bottom: 0;
+			border-right: $border-thick solid $ink;
+
+			&:last-child {
+				border-right: 0;
+			}
+		}
+	}
+
+	&__num {
+		@include mono-label($fs-mono-sm, $red);
+		font-weight: 700;
+		margin-bottom: 4px;
+	}
+
+	&__title {
+		@include display-type($fs-body-lg, $ink);
+		text-transform: uppercase;
+		margin: 0 0 4px;
+	}
+
+	&__desc {
+		color: $muted;
+		font-size: $fs-body-sm;
+		line-height: 1.35;
+		margin: 0;
+	}
+}
+
+/* Galerie photo — 4 rôles, cases hautes, on défile si ça déborde */
+.cast {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+	min-height: 0;
+	background: $ink;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior: contain;
+
+	&__eyebrow {
+		@include mono-label($fs-mono-sm, $paper);
+		text-transform: uppercase;
+		margin: 0;
+		padding: $sp-2 $gutter;
+		letter-spacing: 0.08em;
+		opacity: 0.75;
+		flex-shrink: 0;
+		position: sticky;
+		top: 0;
+		z-index: 3;
+		background: rgb(23 19 16 / 0.92);
+		backdrop-filter: blur(6px);
+	}
+
+	&__gallery {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		grid-auto-rows: minmax(62dvh, auto);
+		gap: 3px;
+		background: $ink;
+		flex: 0 0 auto;
+		min-height: min-content;
+		padding-bottom: 4px;
+	}
+
+	&__shot {
+		position: relative;
+		display: block;
+		width: 100%;
+		min-height: 62dvh;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		border: 0;
+		overflow: hidden;
+		cursor: pointer;
+		background: #cfc4b8;
+		touch-action: manipulation;
+		-webkit-tap-highlight-color: transparent;
+
+		&:focus-visible {
+			outline: 3px solid $gold;
+			outline-offset: -3px;
+			z-index: 2;
+		}
+
+		&:hover .cast__img,
+		&:focus-visible .cast__img {
+			transform: scale(1.03);
+			filter: brightness(1.06);
+		}
+
+		&:hover .cast__veil,
+		&:focus-visible .cast__veil {
+			opacity: 1;
+		}
+	}
+
+	&__img {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center 22%;
+		display: block;
+		pointer-events: none;
+		transition:
+			filter 0.25s ease,
+			transform 0.35s ease;
+	}
+
+	&__veil {
+		position: absolute;
+		inset: 0;
+		opacity: 0.95;
+		background: linear-gradient(
+			180deg,
+			rgb(23 19 16 / 0.05) 28%,
+			rgb(23 19 16 / 0.35) 62%,
+			rgb(23 19 16 / 0.88) 100%
+		);
+		pointer-events: none;
+		transition: opacity 0.25s ease;
+	}
+
+	&__label {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 1;
+		padding: $sp-3;
+		display: flex;
+		flex-direction: column;
+		gap: 2px;
+		align-items: flex-start;
+		text-align: left;
+		color: $paper;
+	}
+
+	&__note {
+		@include mono-label($fs-mono-xs, $gold);
+		text-transform: uppercase;
+		margin: 0;
+	}
+
+	&__name {
+		font-family: $font-display;
+		font-size: clamp(1.15rem, 4.2vw, 1.85rem);
+		font-weight: 900;
+		text-transform: uppercase;
+		line-height: 0.95;
+		margin: 0;
+	}
+
+	&__blurb {
+		margin: 4px 0 0;
+		font-size: $fs-body-sm;
+		line-height: 1.3;
+		opacity: 0.88;
+		max-width: 18rem;
+	}
+
+	&__cta {
+		@include mono-label($fs-mono-xs, $paper);
+		text-transform: uppercase;
+		margin-top: 8px;
+		padding: 5px 8px;
+		border: 1px solid rgb(247 243 234 / 0.45);
+		opacity: 0.95;
+	}
+}
+
+@include from($bp-md) {
+	.cast__gallery {
+		grid-auto-rows: minmax(70dvh, auto);
+	}
+
+	.cast__shot {
+		min-height: 70dvh;
+	}
+
+	.cast__img {
+		object-position: center 18%;
+	}
+}
+
+@include from($bp-lg) {
+	.cast__gallery {
+		grid-template-columns: repeat(4, 1fr);
+		grid-auto-rows: minmax(calc(100dvh - 7rem), auto);
+	}
+
+	.cast__shot {
+		min-height: calc(100dvh - 7rem);
+	}
+
+	.cast__blurb {
+		display: block;
+	}
+}
+
+.dossier-page {
+	&__back a {
+		@include mono-label($fs-mono-sm, $muted);
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+}
+
+.folder {
+	border: $border-thick solid $ink;
+	background: $paper-alt;
+	margin: $sp-2 0 $sp-3;
+	overflow: hidden;
+
+	&--compact .folder__headline {
+		font-size: clamp(1.15rem, 3vw, 1.6rem);
+	}
+
+	&__tab {
+		display: flex;
+		justify-content: space-between;
+		gap: $sp-2;
+		padding: 10px $sp-3;
+		background: $ink;
+		@include mono-label($fs-mono-sm, $paper);
+		text-transform: uppercase;
+	}
+
+	&__split {
+		display: grid;
+		gap: 0;
+		grid-template-columns: 1fr;
+
+		@include from($bp-md) {
+			grid-template-columns: minmax(220px, 38%) 1fr;
+			min-height: 320px;
+		}
+	}
+
+	&__charge {
+		padding: $sp-4;
+		border-top: $border-thick solid $ink;
+
+		@include from($bp-md) {
+			border-top: 0;
+			border-left: $border-thick solid $ink;
+		}
+	}
+
+	&__headline {
+		@include display-type(clamp(1.2rem, 3.2vw, 1.75rem), $ink);
+		text-transform: uppercase;
+		margin: $sp-2 0;
+	}
+
+	&__body {
+		color: $ink-soft;
+		font-size: $fs-body-md;
+		line-height: 1.4;
+		margin: 0 0 $sp-2;
+	}
+
+	&__stats {
+		display: grid;
+		border-top: $border-thick solid $ink;
+
+		&--one {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	&__stat {
+		padding: $sp-3;
+	}
+
+	&__statLabel {
+		@include mono-label($fs-mono-sm, $muted);
+		text-transform: uppercase;
+		margin-bottom: 4px;
+	}
+
+	&__statValue {
+		@include display-type($fs-display-lg, $ink);
+		margin: 0;
+	}
+}
+
+.polaroid {
+	position: relative;
+	padding: 0;
+	background: #e2d8d3;
+	min-height: 240px;
+
+	&--tight {
+		padding: 0;
+	}
+
+	&__frame {
+		min-height: 240px;
+		height: 100%;
+		display: grid;
+		place-items: end center;
+		background: transparent;
+		border: 0;
+		overflow: hidden;
+
+		@include from($bp-md) {
+			min-height: 320px;
+		}
+	}
+
+	&__name {
+		@include mono-label($fs-mono-md, $ink);
+		font-weight: 700;
+		text-transform: uppercase;
+		margin: 0;
+		text-align: center;
+		position: absolute;
+		left: $sp-3;
+		bottom: $sp-3;
+		background: $paper;
+		border: 1px solid $ink;
+		padding: 4px 10px;
+	}
+}
+
+.sticky-note {
+	padding: $sp-3;
+	background: $gold-tint;
+	border: $border-thick solid $ink;
+
+	&--tight {
+		padding: $sp-3;
+	}
+
+	&__kicker {
+		@include mono-label($fs-mono-sm, $gold-deep);
+		text-transform: uppercase;
+		margin-bottom: 4px;
+	}
+
+	&__quote {
+		font-size: $fs-body-md;
+		line-height: 1.35;
+		margin: 0;
+	}
+}
+
+.how__more {
+	margin: $sp-3 0 0;
+	@include mono-label($fs-mono-sm, $ink);
+	text-transform: uppercase;
+
+	a {
+		color: $ink;
+		text-decoration: none;
+		border-bottom: 1px solid $ink;
+	}
+}
+
+.rules {
+	max-width: $content-max;
+	margin: 0 auto;
+	padding: $sp-2 0 $sp-5;
+
+	&__kicker {
+		@include mono-label($fs-mono-sm, $red);
+		text-transform: uppercase;
+		margin: 0;
+	}
+
+	&__title {
+		@include display-type($fs-display-lg, $ink);
+		text-transform: uppercase;
+		margin: 0 0 $sp-2;
+	}
+
+	&__lead {
+		margin: 0 0 $sp-4;
+		color: $muted;
+		line-height: 1.4;
+		max-width: 36rem;
+	}
+
+	&__block {
+		margin-bottom: $sp-4;
+		padding-bottom: $sp-3;
+		border-bottom: 1px solid rgb(23 19 16 / 0.15);
+
+		h2 {
+			@include mono-label($fs-mono-sm, $ink);
+			text-transform: uppercase;
+			margin: 0 0 $sp-2;
+		}
+
+		ol, ul {
+			margin: 0;
+			padding-left: 1.2rem;
+			line-height: 1.5;
+		}
+
+		li {
+			margin-bottom: 6px;
+		}
+
+		p {
+			margin: 0;
+			line-height: 1.45;
+		}
+	}
+
+	&__back {
+		@include mono-label($fs-mono-sm, $ink);
+		text-transform: uppercase;
+
+		a {
+			color: $ink;
+		}
+	}
+}
+
+.flow-rail {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 6px;
+	padding: 8px $gutter;
+	@include mono-label($fs-mono-xs, $muted);
+	text-transform: uppercase;
+	border-bottom: 1px solid rgb(23 19 16 / 0.12);
+	background: $paper;
+	flex-shrink: 0;
+
+	&__step {
+		&.is-active {
+			color: $ink;
+			font-weight: 700;
+		}
+
+		&.is-done a {
+			color: $muted;
+			text-decoration: none;
+			border-bottom: 1px solid currentColor;
+		}
+	}
+
+	&__sep {
+		opacity: 0.4;
+	}
+}
+
+.screen__body--flush .flow-rail {
+	padding-left: $gutter;
+	padding-right: $gutter;
+}
