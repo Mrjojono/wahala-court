@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from typing import Any
 
+LANGUAGE_RULE = """RÈGLE DE LANGUE — Toutes les réponses destinées à l'utilisateur doivent être rédigées en français naturel (français courant d'Afrique de l'Ouest/Togo), même si les messages, sources ou données d'entrée sont en anglais. Pour le JSON, garde les noms de clés et les valeurs imposées par le schéma, mais écris tout le contenu des champs textuels en français."""
+
 PERSONA_HINTS = {
 	"juge": "Tu es le juge du Tribunal de Wahala. Tu tranchés, tu rappelles l'ordre, ton est solennel mais piquant.",
 	"procureur": "Tu es le procureur. Tu charges l'accusé, tu cites des 'articles', tu dramatises.",
@@ -58,7 +60,8 @@ def debate_messages(
 		if mode == "chaos"
 		else "Mode SÉRIEUX: ton plus juridique, toujours un peu tabloïd."
 	)
-	system = f"""Tu joues dans Wahala Court, un procès comique des petits wahalas.
+	system = f"""{LANGUAGE_RULE}
+Tu joues dans Wahala Court, un procès comique des petits wahalas.
 {hint}
 {mode_line}
 {_format_voice(voice)}
@@ -103,7 +106,8 @@ def chamber_messages(
 ) -> list[dict[str, str]]:
 	lines = "\n".join(f"- [{t.get('speaker')}] {t.get('text')}" for t in transcript[-16:])
 	mode_line = "Mode CHAOS" if mode == "chaos" else "Mode SÉRIEUX"
-	system = f"""Tu es la CHAMBRE DU CONSEIL de Wahala Court — un mini tribunal multi-agents dans UN seul JSON.
+	system = f"""{LANGUAGE_RULE}
+Tu es la CHAMBRE DU CONSEIL de Wahala Court — un mini tribunal multi-agents dans UN seul JSON.
 Tu simules 3 cerveaux Gemma distincts qui se contredisent puis le juge tranche.
 Le vote du PEUPLE est déjà connu: {people_vote}.
 Tu peux ACCORDER ou CONTREDIRE le peuple — le contraste peuple vs tribunal est le cœur du produit.
@@ -139,7 +143,8 @@ Schéma JSON strict:
 
 
 def voice_messages(*, raw: str, accused_name: str) -> list[dict[str, str]]:
-	system = """Tu extrais l'ADN stylistique d'un pote à partir de ses messages WhatsApp.
+	system = LANGUAGE_RULE + """
+Tu extrais l'ADN stylistique d'un pote à partir de ses messages WhatsApp.
 Réponds UNIQUEMENT en JSON valide, sans markdown."""
 	user = f"""Nom: {accused_name or 'le pote'}
 Messages:
@@ -162,7 +167,8 @@ def post_messages(*, entry: dict[str, Any], formats: list[str]) -> list[dict[str
 	verdict = entry.get("verdict") or {}
 	people = entry.get("peopleShare", 0)
 	wanted = ", ".join(formats) if formats else "caption, whatsapp, dev"
-	system = """Tu es rédacteur·ice du greffe de Wahala Court.
+	system = LANGUAGE_RULE + """
+Tu es rédacteur·ice du greffe de Wahala Court.
 Produis des brouillons prêts à coller, en français, ton tabloïd africain francophone.
 Réponds UNIQUEMENT en JSON valide avec les clés demandées, sans markdown."""
 	user = f"""Affaire {case.get('number', '')}
@@ -217,7 +223,8 @@ def extract_law_cite(text: str) -> str | None:
 
 
 def depot_messages(*, friend_name: str, raw: str) -> list[dict[str, str]]:
-	system = """Tu es greffier comique de Wahala Court.
+	system = LANGUAGE_RULE + """
+Tu es greffier comique de Wahala Court.
 À partir d'un wahala raconté pour UN pote, tu montes un dossier de procès tabloïd.
 Réponds UNIQUEMENT en JSON valide, sans markdown."""
 	user = f"""Pote: {friend_name or 'le pote'}
@@ -251,7 +258,8 @@ def letter_messages(
 	people_vote: str,
 	verdict: dict[str, Any],
 ) -> list[dict[str, str]]:
-	system = """Tu écris une courte lettre WhatsApp à un pote après son procès Wahala Court.
+	system = LANGUAGE_RULE + """
+Tu écris une courte lettre WhatsApp à un pote après son procès Wahala Court.
 Ton chaleureux, drôle, pas méchant. Français. Pas de jargon juridique lourd.
 Réponds UNIQUEMENT en JSON: {"letter": "...", "opener": "salutation courte"}."""
 	user = f"""Destinataire: {friend_name}
