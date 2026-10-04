@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import PlainTextResponse
 
 from app.config import get_settings
 from app.routes.chamber import router as chamber_router
@@ -27,6 +28,12 @@ app.add_middleware(
 app.include_router(posts_router, prefix="/v1")
 app.include_router(chamber_router, prefix="/v1")
 app.include_router(debate_ws_router)
+
+
+@app.get("/", response_class=PlainTextResponse)
+@app.get("/ping", response_class=PlainTextResponse)
+async def ping():
+	return "pong"
 
 
 @app.get("/health")
